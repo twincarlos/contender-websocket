@@ -16,10 +16,10 @@ io.on("connection", (socket) => {
         socket.join(id);
         console.log(`User joined tournament **${id}**`);
     });
-    // socket.on("update-tournament", ({ tournament }) => {
-    //     io.emit("update-tournament", tournament);
-    //     console.log(`Tournament updated: **tournament-${tournament.id}**`);
-    // });
+    socket.on("update-tournament", ({ tournament }) => {
+        io.emit("update-tournament", tournament);
+        console.log(`Tournament updated: **tournament-${tournament.id}**`);
+    });
     socket.on("update-single-tournament", ({ tournament }) => {
         io.to(`tournament-${tournament.id}`).emit("update-single-tournament", tournament);
         console.log(`Tournament updated: **tournament-${tournament.id}**`);
