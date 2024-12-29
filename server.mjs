@@ -20,6 +20,10 @@ io.on("connection", (socket) => {
         io.emit("update-tournament", tournament);
         console.log(`Tournament updated: **tournament-${tournament.id}**`);
     });
+    socket.on("update-single-tournament", ({ tournament }) => {
+        io.to(`tournament-${tournament.id}`).emit("update-single-tournament", tournament);
+        console.log(`Tournament updated: **tournament-${tournament.id}**`);
+    });
     socket.on("add-tournament", ({ tournament }) => {
         io.emit("add-tournament", tournament);
         console.log(`Tournament added: **tournament-${tournament.id}**`);
