@@ -12,21 +12,23 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
     console.log(`User connected: **${socket.id}**`);
 
-    socket.on("join-tournament", ({ id }) => {
+    socket.on("join-tournament", (id) => {
         socket.join(id);
         console.log(`User joined tournament **${id}**`);
     });
-    socket.on("update-tournament", ({ tournament }) => {
-        io.emit("update-tournament", tournament);
-        console.log(`Tournament updated: **tournament-${tournament.id}**`);
-    });
-    socket.on("update-single-tournament", ({ tournament }) => {
-        io.to(`tournament-${tournament.id}`).emit("update-single-tournament", tournament);
-        console.log(`Single tournament updated: **tournament-${tournament.id}**`);
-    });
-    socket.on("add-tournament", ({ tournament }) => {
+    socket.on("add-tournament", (tournament) => {
         io.emit("add-tournament", tournament);
         console.log(`Tournament added: **tournament-${tournament.id}**`);
+    });
+    socket.on("update-tournament", (tournament) => {
+        io.emit("update-tournament", tournament);
+        io.to(`tournament-${tournament.id}`).emit("update-single-tournament", tournament);
+        console.log(`Tournament updated: **tournament-${tournament.id}**`);
+    });
+    socket.on("delete-tournament", (id) => {
+      io.emit("delete-tournament", id);
+      io.to(`tournament-${tournament.id}`).emit("delete-single-tournament");
+      console.log(`Tournament deleted: **tournament-${id}**`);
     });
 
     socket.on("disconnect", () => {
