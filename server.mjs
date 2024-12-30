@@ -13,7 +13,7 @@ io.on("connection", (socket) => {
     console.log(`User connected: **${socket.id}**`);
 
     socket.on("join-tournament", (id) => {
-        socket.join(id);
+        socket.join(`tournament-${id}`);
         console.log(`User joined tournament **${id}**`);
     });
     socket.on("add-tournament", (tournament) => {
@@ -27,7 +27,7 @@ io.on("connection", (socket) => {
     });
     socket.on("delete-tournament", (id) => {
       io.emit("delete-tournament", id);
-      io.to(`tournament-${tournament.id}`).emit("delete-single-tournament");
+      io.to(`tournament-${tournament.id}`).emit("delete-single-tournament", id);
       console.log(`Tournament deleted: **tournament-${id}**`);
     });
 
