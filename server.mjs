@@ -27,7 +27,7 @@ io.on("connection", (socket) => {
     });
     socket.on("delete-tournament", (id) => {
       io.emit("delete-tournament", id);
-      io.to(`tournament-${tournament.id}`).emit("delete-single-tournament", id);
+      io.to(`tournament-${id}`).emit("delete-single-tournament");
       console.log(`Tournament deleted: **tournament-${id}**`);
     });
 
