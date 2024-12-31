@@ -34,6 +34,9 @@ io.on("connection", (socket) => {
   socket.on("update-tournament-player", (tournamentPlayer) => {
     io.to(`tournament-${tournamentPlayer.tournamentId}`).emit("update-tournament-player", tournamentPlayer);
   });
+  socket.on("delete-tournament-player", ({ tournamentId, tournamentPlayerId }) => {
+    io.to(`tournament-${tournamentId}`).emit("delete-single-tournament", tournamentPlayerId);
+  });
 
   socket.on("disconnect", () => {
     console.log("User disconnected");
