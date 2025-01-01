@@ -38,6 +38,17 @@ io.on("connection", (socket) => {
     io.to(`tournament-${tournamentId}`).emit("delete-tournament-player", tournamentPlayerId);
   });
 
+  socket.on("create-tournament-event", (tournamentEvent) => {
+    io.to(`tournament-${tournamentEvent.tournamentId}`).emit("create-tournament-event", tournamentEvent);
+  });
+  socket.on("update-tournament-event", (tournamentEvent) => {
+    io.to(`tournament-${tournamentEvent.tournamentId}`).emit("update-tournament-event", tournamentEvent);
+  });
+  socket.on("delete-tournament-event", ({ tournamentId, tournamentEventId }) => {
+    io.to(`tournament-${tournamentId}`).emit("delete-tournament-event", tournamentEventId);
+    io.to(`tournament-event-${tournamentEventId}`).emit("delete-tournament-event");
+  });
+
   socket.on("disconnect", () => {
     console.log("User disconnected");
   });
