@@ -35,7 +35,7 @@ io.on("connection", (socket) => {
     io.to(`tournament-${tournamentPlayer.tournamentId}`).emit("update-tournament-player", tournamentPlayer);
   });
   socket.on("delete-tournament-player", ({ tournamentId, tournamentPlayerId }) => {
-    io.to(`tournament-${tournamentId}`).emit("delete-single-tournament", tournamentPlayerId);
+    io.to(`tournament-${tournamentId}`).emit("delete-tournament-player", tournamentPlayerId);
   });
 
   socket.on("disconnect", () => {
